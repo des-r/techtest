@@ -1,0 +1,22 @@
+test {
+    useJUnitPlatform()
+
+    minHeapSize = "1024m"
+    maxHeapSize = "4096m"
+
+    exclude 'io/quell/techtest/integration/**'
+    include 'io/quell/techtest/**'
+
+    testLogging {
+        events = ['passed', 'failed']
+    }
+
+    reports {
+        junitXml {
+            destination = file("$testResultsDir/unit")
+        }
+        html {
+            destination = file("$testReportDir/unit")
+        }
+    }
+}

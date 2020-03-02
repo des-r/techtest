@@ -1,0 +1,21 @@
+task integrationTest(type: Test) {
+    useJUnitPlatform()
+
+    minHeapSize = "1024m"
+    maxHeapSize = "4096m"
+
+    includes += ['io/quell/techtest/integration/**']
+
+    testLogging {
+        events = ['passed', 'failed']
+    }
+
+    reports {
+        junitXml {
+            destination = file("$testResultsDir/io.quell.techtest.integration")
+        }
+        html {
+            destination = file("$testReportDir/io.quell.techtest.integration")
+        }
+    }
+}
