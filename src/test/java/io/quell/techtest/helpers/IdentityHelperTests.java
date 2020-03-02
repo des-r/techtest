@@ -2,7 +2,6 @@ package io.quell.techtest.helpers;
 
 import lombok.AccessLevel;
 import lombok.experimental.FieldDefaults;
-import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -25,16 +24,16 @@ class IdentityHelperTests {
     public static final int MAX_ONE_PAIR = 1_098_240;
     public static final int MAX_HIGH_CARD = 1_302_540;
 
-    private static final AtomicInteger rfCount = new AtomicInteger(0);
-    private static final AtomicInteger sfCount = new AtomicInteger(0);
-    private static final AtomicInteger fourCount = new AtomicInteger(0);
-    private static final AtomicInteger fhCount = new AtomicInteger(0);
-    private static final AtomicInteger fCount = new AtomicInteger(0);
-    private static final AtomicInteger sCount = new AtomicInteger(0);
-    private static final AtomicInteger threeCount = new AtomicInteger(0);
-    private static final AtomicInteger twoCount = new AtomicInteger(0);
-    private static final AtomicInteger oneCount = new AtomicInteger(0);
-    private static final AtomicInteger hcCount = new AtomicInteger(0);
+    private static final AtomicInteger royalFlushCount = new AtomicInteger(0);
+    private static final AtomicInteger straightFlush = new AtomicInteger(0);
+    private static final AtomicInteger fourOfAKindCount = new AtomicInteger(0);
+    private static final AtomicInteger fullHouseCount = new AtomicInteger(0);
+    private static final AtomicInteger flushCount = new AtomicInteger(0);
+    private static final AtomicInteger straightCount = new AtomicInteger(0);
+    private static final AtomicInteger threeOfAKindCount = new AtomicInteger(0);
+    private static final AtomicInteger twoPairCount = new AtomicInteger(0);
+    private static final AtomicInteger onePairCount = new AtomicInteger(0);
+    private static final AtomicInteger highCardCount = new AtomicInteger(0);
 
     IdentityHelper classUnderTest;
 
@@ -43,29 +42,15 @@ class IdentityHelperTests {
         classUnderTest = new IdentityHelper();
     }
 
-    @AfterAll
-    static void tearDown() {
-        System.out.println("DALEDALEDALEDALEDALEDALEDALEDALEDALEDALEDALEDALEDALEDALEDALEDALEDALEDALEDALEDALE:" + rfCount);
-        System.out.println(("DALEDALEDALEDALEDALEDALEDALEDALEDALEDALEDALEDALEDALEDALEDALEDALEDALEDALEDALEDALE:" + sfCount));
-        System.out.println(("DALEDALEDALEDALEDALEDALEDALEDALEDALEDALEDALEDALEDALEDALEDALEDALEDALEDALEDALEDALE:" + fourCount));
-        System.out.println(("DALEDALEDALEDALEDALEDALEDALEDALEDALEDALEDALEDALEDALEDALEDALEDALEDALEDALEDALEDALE:" + fhCount));
-        System.out.println(("DALEDALEDALEDALEDALEDALEDALEDALEDALEDALEDALEDALEDALEDALEDALEDALEDALEDALEDALEDALE:" + fCount));
-        System.out.println(("DALEDALEDALEDALEDALEDALEDALEDALEDALEDALEDALEDALEDALEDALEDALEDALEDALEDALEDALEDALE:" + sCount));
-        System.out.println(("DALEDALEDALEDALEDALEDALEDALEDALEDALEDALEDALEDALEDALEDALEDALEDALEDALEDALEDALEDALE:" + threeCount));
-        System.out.println(("DALEDALEDALEDALEDALEDALEDALEDALEDALEDALEDALEDALEDALEDALEDALEDALEDALEDALEDALEDALE:" + twoCount));
-        System.out.println(("DALEDALEDALEDALEDALEDALEDALEDALEDALEDALEDALEDALEDALEDALEDALEDALEDALEDALEDALEDALE:" + oneCount));
-        System.out.println(("DALEDALEDALEDALEDALEDALEDALEDALEDALEDALEDALEDALEDALEDALEDALEDALEDALEDALEDALEDALE:" + hcCount));
-    }
-
     @Test
     void testIsRoyalFlush() {
         ALL_HANDS.parallelStream()
                 .forEach(hand -> {
                     boolean result = classUnderTest.isRoyalFlush(hand.getHand());
-                    rfCount.addAndGet((result) ? 1 : 0);
+                    royalFlushCount.addAndGet((result) ? 1 : 0);
                 });
 
-        assertThat(rfCount.get()).isEqualTo(MAX_ROYAL_FLUSH);
+        assertThat(royalFlushCount.get()).isEqualTo(MAX_ROYAL_FLUSH);
     }
 
     @Test
@@ -73,10 +58,10 @@ class IdentityHelperTests {
         ALL_HANDS.parallelStream()
                 .forEach(hand -> {
                     boolean result = classUnderTest.isStraightFlush(hand.getHand());
-                    sfCount.addAndGet((result) ? 1 : 0);
+                    straightFlush.addAndGet((result) ? 1 : 0);
                 });
 
-        assertThat(sfCount.get()).isEqualTo(MAX_STRAIGHT_FLUSH);
+        assertThat(straightFlush.get()).isEqualTo(MAX_STRAIGHT_FLUSH);
     }
 
     @Test
@@ -84,10 +69,10 @@ class IdentityHelperTests {
         ALL_HANDS.parallelStream()
                 .forEach(hand -> {
                     boolean result = classUnderTest.isFourOfAKind(hand.getHand());
-                    fourCount.addAndGet((result) ? 1 : 0);
+                    fourOfAKindCount.addAndGet((result) ? 1 : 0);
                 });
 
-        assertThat(fourCount.get()).isEqualTo(MAX_FOUR_OF_A_KIND);
+        assertThat(fourOfAKindCount.get()).isEqualTo(MAX_FOUR_OF_A_KIND);
     }
 
     @Test
@@ -95,10 +80,10 @@ class IdentityHelperTests {
         ALL_HANDS.parallelStream()
                 .forEach(hand -> {
                     boolean result = classUnderTest.isFullHouse(hand.getHand());
-                    fhCount.addAndGet((result) ? 1 : 0);
+                    fullHouseCount.addAndGet((result) ? 1 : 0);
                 });
 
-        assertThat(fhCount.get()).isEqualTo(MAX_FULL_HOUSE);
+        assertThat(fullHouseCount.get()).isEqualTo(MAX_FULL_HOUSE);
     }
 
     @Test
@@ -106,10 +91,10 @@ class IdentityHelperTests {
         ALL_HANDS.parallelStream()
                 .forEach(hand -> {
                     boolean result = classUnderTest.isFlush(hand.getHand());
-                    fCount.addAndGet((result) ? 1 : 0);
+                    flushCount.addAndGet((result) ? 1 : 0);
                 });
 
-        assertThat(fCount.get()).isEqualTo(MAX_FLUSH);
+        assertThat(flushCount.get()).isEqualTo(MAX_FLUSH);
     }
 
     @Test
@@ -117,10 +102,10 @@ class IdentityHelperTests {
         ALL_HANDS.parallelStream()
                 .forEach(hand -> {
                     boolean result = classUnderTest.isStraight(hand.getHand());
-                    sCount.addAndGet((result) ? 1 : 0);
+                    straightCount.addAndGet((result) ? 1 : 0);
                 });
 
-        assertThat(sCount.get()).isEqualTo(MAX_STRAIGHT);
+        assertThat(straightCount.get()).isEqualTo(MAX_STRAIGHT);
     }
 
     @Test
@@ -128,10 +113,10 @@ class IdentityHelperTests {
         ALL_HANDS.parallelStream()
                 .forEach(hand -> {
                     boolean result = classUnderTest.isThreeOfAKind(hand.getHand());
-                    threeCount.addAndGet((result) ? 1 : 0);
+                    threeOfAKindCount.addAndGet((result) ? 1 : 0);
                 });
 
-        assertThat(threeCount.get()).isEqualTo(MAX_THREE_OF_KIND);
+        assertThat(threeOfAKindCount.get()).isEqualTo(MAX_THREE_OF_KIND);
     }
 
     @Test
@@ -139,10 +124,10 @@ class IdentityHelperTests {
         ALL_HANDS.parallelStream()
                 .forEach(hand -> {
                     boolean result = classUnderTest.isTwoPair(hand.getHand());
-                    twoCount.addAndGet((result) ? 1 : 0);
+                    twoPairCount.addAndGet((result) ? 1 : 0);
                 });
 
-        assertThat(twoCount.get()).isEqualTo(MAX_TWO_PAIR);
+        assertThat(twoPairCount.get()).isEqualTo(MAX_TWO_PAIR);
     }
 
     @Test
@@ -150,10 +135,10 @@ class IdentityHelperTests {
         ALL_HANDS.parallelStream()
                 .forEach(hand -> {
                     boolean result = classUnderTest.isOnePair(hand.getHand());
-                    oneCount.addAndGet((result) ? 1 : 0);
+                    onePairCount.addAndGet((result) ? 1 : 0);
                 });
 
-        assertThat(oneCount.get()).isEqualTo(MAX_ONE_PAIR);
+        assertThat(onePairCount.get()).isEqualTo(MAX_ONE_PAIR);
     }
 
     @Test
@@ -161,9 +146,9 @@ class IdentityHelperTests {
         ALL_HANDS.parallelStream()
                 .forEach(hand -> {
                     boolean result = classUnderTest.isHighCard(hand.getHand());
-                    hcCount.addAndGet((result) ? 1 : 0);
+                    highCardCount.addAndGet((result) ? 1 : 0);
                 });
 
-        assertThat(hcCount.get()).isEqualTo(MAX_HIGH_CARD);
+        assertThat(highCardCount.get()).isEqualTo(MAX_HIGH_CARD);
     }
 }
