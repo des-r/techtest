@@ -49,19 +49,20 @@ public class IdentityHelper {
             ROYAL_FLUSH_HEARTS
     );
 
+    public static final int ZERO = 0;
     public static final int TWO = 2;
     public static final long THREE = 3;
     public static final int FOUR = 4;
-
-    public static final List<String> allRanks = Arrays.asList("A", "2", "3", "4", "5", "6", "7", "8", "9", "T", "J", "Q", "K", "A");
-    public static final List<Set<String>> SEQUENTIAL_BLOCKS = new ArrayList<>();
     public static final int FIVE = 5;
+    public static final String JACK = "J";
 
-    public static final int ZERO = 0;
+    public static final List<String> ALL_RANKS = Arrays.asList("A", "2", "3", "4", "5", "6", "7", "8", "9", "T", "J", "Q", "K", "A");
+    public static final List<Set<String>> SEQUENTIAL_BLOCKS = new ArrayList<>();
+
 
     static {
-        for (int i = ZERO; i < allRanks.indexOf("J"); i++) {
-            Set<String> work = new HashSet<>(Arrays.asList(allRanks.get(i), allRanks.get(i + 1), allRanks.get(i + TWO), allRanks.get(i + 3), allRanks.get(i + FOUR)));
+        for (int i = ZERO; i < ALL_RANKS.indexOf(JACK); i++) {
+            Set<String> work = new HashSet<>(Arrays.asList(ALL_RANKS.get(i), ALL_RANKS.get(i + 1), ALL_RANKS.get(i + TWO), ALL_RANKS.get(i + 3), ALL_RANKS.get(i + FOUR)));
             SEQUENTIAL_BLOCKS.add(work);
         }
     }
@@ -167,11 +168,7 @@ public class IdentityHelper {
             return ZERO;
         }
 
-        if (SEQUENTIAL_BLOCKS.contains(collect)) {
-            return FIVE;
-        }
-
-        return ZERO;
+        return SEQUENTIAL_BLOCKS.contains(collect) ? FIVE : ZERO;
     }
 
     private boolean doesHandContain(Set<Card> cards, int countMatch, Function<Card, String> cardFn) {
